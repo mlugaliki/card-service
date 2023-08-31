@@ -3,8 +3,10 @@ package com.logicea.cards.web;
 import com.logicea.cards.dto.secuirty.JwtAuthResponse;
 import com.logicea.cards.dto.secuirty.LoginRequestDto;
 import com.logicea.cards.services.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,7 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtAuthResponse> signin(@RequestBody LoginRequestDto request) {
+    public ResponseEntity<JwtAuthResponse> signin(@RequestBody @Valid LoginRequestDto request) {
         return ResponseEntity.ok(authenticationService.signin(request));
     }
 }

@@ -1,4 +1,13 @@
 package com.logicea.cards.dto.secuirty;
 
-public record LoginRequestDto(String email, String password) {
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
+import java.io.Serializable;
+
+public record LoginRequestDto(@NotBlank
+                              @Email
+                              String email,
+                              @NotBlank
+                              String password) implements Serializable {
 }

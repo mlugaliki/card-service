@@ -9,7 +9,6 @@ public record SearchDto(String name,
                         String colour,
                         Status status,
                         LocalDate createDate,
-                        String orderColumn,
-                        String direction) implements Serializable {
-    // name, color, status and date of creation
+                        OrderColumn orderColumn,
+                        OrderBy direction) implements Serializable {
 }

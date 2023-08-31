@@ -5,6 +5,7 @@ import com.logicea.cards.dto.CardResponse;
 import com.logicea.cards.dto.SearchDto;
 import com.logicea.cards.models.Users;
 import com.logicea.cards.services.CardService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/cards")
 public class CardController {
     private final CardService cardService;
 
@@ -24,7 +24,7 @@ public class CardController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<CardResponse<CardDto>> saveCard(@AuthenticationPrincipal Users user, @RequestBody CardDto cardDto) {
+    public ResponseEntity<CardResponse<CardDto>> saveCard(@AuthenticationPrincipal Users user, @RequestBody @Valid  CardDto cardDto) {
         return ResponseEntity.ok(cardService.saveCard(user, cardDto));
     }
 

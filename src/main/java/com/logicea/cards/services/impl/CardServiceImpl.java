@@ -189,11 +189,9 @@ public class CardServiceImpl implements CardService {
         sql += " 1=1"; // hack to fix the dynamically built query
 
         if (searchDto.orderColumn() != null) {
-            sql += " ORDER BY " + searchDto.orderColumn() + " ";
+            sql += " ORDER BY " + searchDto.orderColumn().name() + " ";
             if (searchDto.direction() != null) {
-                if (searchDto.direction().equalsIgnoreCase("ASC") || searchDto.direction().equalsIgnoreCase("DESC")) {
-                    sql += searchDto.direction();
-                }
+                sql += searchDto.direction();
             }
         }
 
