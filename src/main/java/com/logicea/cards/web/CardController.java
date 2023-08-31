@@ -8,10 +8,7 @@ import com.logicea.cards.services.CardService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +28,10 @@ public class CardController {
     @PostMapping(value = "/search")
     public ResponseEntity<CardResponse<List<CardDto>>> searchCard(@AuthenticationPrincipal Users user, @RequestBody SearchDto cardDto) {
         return ResponseEntity.ok(cardService.search(user, cardDto));
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<CardResponse<CardDto>> updateCard(@AuthenticationPrincipal Users user, @RequestBody @Valid  CardDto cardDto, @PathVariable long id) {
+        return ResponseEntity.ok(cardService.saveCard(id, user, cardDto));
     }
 }

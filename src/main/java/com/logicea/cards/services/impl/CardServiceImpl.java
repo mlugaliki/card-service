@@ -80,8 +80,14 @@ public class CardServiceImpl implements CardService {
      * @return {{@link }} new card information
      */
     @Override
-    public CardResponse<CardDto> saveCard(long id, CardDto cardDto) {
+    public CardResponse<CardDto> saveCard(long id, Users user, CardDto cardDto) {
         try {
+            // if card belongs to the user
+            if (this.cardRepository.getCardByNameAndUserId(cardDto.name(), user.getId()) == 0) {
+                LOG.error("Card exists");
+                return new CardResponse<>("01", "Failed. Card not found", cardDto);
+            }
+
             Cards card = this.cardRepository.getReferenceById(id);
             if (!CommonUtil.validateEmpty(cardDto.name())) {
                 LOG.error("Card with id {} not found", id);
@@ -102,7 +108,7 @@ public class CardServiceImpl implements CardService {
             return new CardResponse<>("00", "Success. Card updated", new CardDto(card.getId(), cardDto.name(), cardDto.description(), cardDto.colour(), card.getStatus(), card.getCreatedAt()));
         } catch (Exception ex) {
             LOG.error(ex.getMessage(), ex);
-            return new CardResponse<>("01", "Failed", cardDto);
+            return new CardResponse<>("01", "Failed to update card", cardDto);
         }
     }
 

@@ -24,7 +24,7 @@ public interface CardService {
      * @param card - New card information
      * @return {{@link }} new card information
      */
-    CardResponse<CardDto> saveCard(long id, CardDto card);
+    CardResponse<CardDto> saveCard(long id,Users user, CardDto card);
 
     /**
      * Soft deletes a card from the DB
