@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  card-service:
+    image: card-service:0.0.1-SNAPSHOT
+    container_name: card_service
+    restart: unless-stopped
+    hostname: card-service
+    ports:
+      - "8080:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - dev-network
+  mysql-db:
+    image: mysql:8.1
+    restart: unless-stopped
+    container_name: mysql_instance
+    hostname: database-host
+    environment:
+      MYSQL_DATABASE: cards
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev1234
+    volumes:
+      - ./init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
+    ports:
+      - "3307:3306"
+    networks:
+      - dev-network
+networks:
+  dev-network:
+    driver: bridge
